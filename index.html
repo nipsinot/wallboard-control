@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incheon Kia Wallboard Launcher</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #050505; color: white; margin: 0; }
+        .btn { padding: 25px 50px; font-size: 24px; font-weight: bold; background: #c4172c; color: white; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 15px rgba(196, 23, 44, 0.4); }
+        .btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <button class="btn" onclick="launchWallboard()">LAUNCH WALLBOARD</button>
+
+    <script>
+        function launchWallboard() {
+            const url = "http://192.168.2.25/app_test/admin/wallboard";
+            
+            // Your custom formatting script
+            const bookmarkletCode = `(function(){const P=['sreerag','dhanil','sijin','ajay','nigel','athul','akhil_ar','adith','ajomon'],O=['davood','nived','jinu','bimal','nitheesh','charls','navin','anil','abhins_pm','syedali','alan','nidhil','justin','anandhu'],B=['akshay','abin','avinas','nandu_b','sreeraj','riswan','joyal','misbah','akhiljoby','tony','akhil','vishnu','ajith','pranav','ihzan','manu','rohith','salman','arunsiju','balu','ameen','vinayak','vishnulal','sijil'];const isT=()=>{const n=new Date(),h=n.getHours()+n.getMinutes()/60;return{c:(h>=9&&h<12)||(h>=14&&h<18),l:h>=12&&h<14}};const pS=s=>{const p=s.split(':');return p.length!==3?0:p[0]*3600+p[1]*60+p[2]*1};const stR=r=>{const t=r.querySelectorAll('td');if(t.length<3)return;const b=r.parentElement;if(b.tagName==='TBODY'||b.tagName==='TABLE'){b.style.display='flex';b.style.flexDirection='column';r.style.display='flex';r.style.width='100%';t.forEach(td=>{td.style.flex='1';td.style.minWidth='0'});}const n=t[0].textContent.trim().toLowerCase(),s=t[1].textContent.trim(),d=t[2].textContent.trim(),sec=pS(d),{c,l}=isT();let p=4;if(P.includes(n)){t[0].style.color='purple';t[0].style.fontWeight='bold';p=1}else if(O.includes(n)){t[0].style.color='orange';t[0].style.fontWeight='bold';p=2}else if(B.includes(n)){t[0].style.color='#0066cc';t[0].style.fontWeight='bold';p=3}r.style.order=p;if(s.includes('CALL')){t[1].style.color=t[2].style.color='green'}else if(s==='RINGING'){t[1].style.color=t[2].style.color='red'}if(s==='BREAK'){if((c&&sec>1200)||(l&&sec>2400)){r.style.backgroundColor='red';t[1].style.color=t[2].style.color='white';r.style.order=0}}else if(s==='CLOSURE'){r.style.backgroundColor='darkorange'}else if(sec>600){r.style.backgroundColor='#e0e0e0'}};const pT=()=>{const sel=['#agentstatus table','#inboundlive table','#outboundlive table'];sel.forEach(s=>{document.querySelectorAll(s).forEach(table=>{const b=table.querySelector('tbody')||table;b.querySelectorAll('tr').forEach((r,i)=>{if(i===0)r.style.order=-1;else stR(r)})})})};const obs=new MutationObserver(pT);obs.observe(document.body,{childList:true,subtree:true});pT();setInterval(pT,500);})();`;
+
+            const newWin = window.open(url, '_blank');
+            
+            // Attempt to inject after a short delay to allow page load
+            setTimeout(() => {
+                try {
+                    newWin.location.href = "javascript:" + bookmarkletCode;
+                } catch (e) {
+                    alert("TV Browser Security Blocked Injection. Please use the bookmark manual method.");
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
